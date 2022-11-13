@@ -1,13 +1,8 @@
 package com.example.mecz.service;
 
 
-import com.example.mecz.model.*;
+import com.example.mecz.model.piłkarz.*;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PiłkarzSerwis {

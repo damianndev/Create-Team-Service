@@ -1,10 +1,8 @@
-package com.example.mecz.model;
+package com.example.mecz.model.trener;
 
-public abstract class Trener implements Trenuje{
-    @Override
-    public void trenuje(){
-        //TODO: trener umie trenować
-    }
+public abstract class Trener {
+
+    private TypTrenera typTrenera;
     private int defensywa;
     private int ofensywa;
     private int motywowanie;
@@ -13,7 +11,8 @@ public abstract class Trener implements Trenuje{
     private int technika;
     private int trening;
 
-    public Trener (int defensywa, int ofensywa, int motywowanie, int taktyka, int kondycja, int technika, int trening){
+    public Trener (TypTrenera typTrenera, int defensywa, int ofensywa, int motywowanie, int taktyka, int kondycja, int technika, int trening){
+        this.typTrenera = typTrenera;
         this.defensywa = defensywa;
         this.ofensywa = ofensywa;
         this.motywowanie = motywowanie;

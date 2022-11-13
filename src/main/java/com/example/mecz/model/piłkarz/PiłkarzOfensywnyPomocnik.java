@@ -1,4 +1,4 @@
-package com.example.mecz.model;
+package com.example.mecz.model.piłkarz;
 
 import com.example.mecz.Utils.Utils;
 import com.google.common.collect.ImmutableList;

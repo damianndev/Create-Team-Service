@@ -31,16 +31,7 @@ public enum Ustawienie {
 
 
 
-    public Ustawienie mapToLineup(Integer nrUstawienia){
 
-        List<Ustawienie> lineups = new ArrayList<>(Arrays.asList(Ustawienie.values()));
-        Ustawienie ustawienie = lineups.stream()
-                .filter(l -> l.getNrUstawienia().equals(nrUstawienia))
-                .findFirst()
-                .orElse(lineups.get(0));
-
-    return ustawienie;
-    }
 }
 
 //TODO: controller który zwróci ustawienie poprzez postmana, na przykładzie kontrolera z wyścigu tam gdzie liczba
