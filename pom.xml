@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>mecz</artifactId>
+	<artifactId>CreateTeamService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>mecz</name>
-	<description>Mecz project</description>
+	<description>CreateTeamService</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -37,6 +37,18 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.23.1</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>

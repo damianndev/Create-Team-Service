@@ -25,44 +25,43 @@ public class DrużynaSerwis {
     private static final Integer DODATKOWY_OFENSYWNY_POMOCNIK = 2;
     private static final Integer DODATKOWY_NAPASTNIK = 2;
 
-
     private PiłkarzSerwis piłkarzSerwis;
     private TrenerSerwis trenerSerwis;
+    private ApiGateway apiGateway;
 
-    public DrużynaSerwis(PiłkarzSerwis piłkarzSerwis, TrenerSerwis trenerSerwis) {
+
+    public DrużynaSerwis(PiłkarzSerwis piłkarzSerwis, TrenerSerwis trenerSerwis, ApiGateway apiGateway) {
         this.piłkarzSerwis = piłkarzSerwis;
         this.trenerSerwis = trenerSerwis;
+        this.apiGateway = apiGateway;
     }
 
     public Drużyna stwórzDrużynę(String typTrenera, Integer nrUstawienia) {
         Ustawienie ustawienie = mapToLineup(nrUstawienia);
         List<Piłkarz> piłkarze = stworzeniePiłkarzy(ustawienie);
         Trener trener = stwórzTrenera(typTrenera);
-        return new Drużyna(ustawienie,piłkarze,trener);
+        return new Drużyna(ustawienie, piłkarze, trener);
     }
 
-        public Trener stwórzTrenera(String typTrenera){
+    public Trener stwórzTrenera(String typTrenera) {
         try {
             Trener trener = trenerSerwis.stwórzTrenera(TypTrenera.valueOf(typTrenera));
             return trener;
         } catch (Exception exception) {
-            throw new TrenerException(typTrenera);
+            throw new TrenerException(typTrenera, exception.getMessage());
         }
     }
 
-
-    private Ustawienie mapToLineup(Integer nrUstawienia) {
-
+    public Ustawienie mapToLineup(Integer nrUstawienia) {
         List<Ustawienie> lineups = new ArrayList<>(Arrays.asList(Ustawienie.values()));
         Ustawienie ustawienie = lineups.stream()
                 .filter(l -> l.getNrUstawienia().equals(nrUstawienia))
                 .findFirst()
                 .orElseThrow(() -> new UstawienieException(nrUstawienia));
-
         return ustawienie;
     }
 
-    private List<Piłkarz> stworzeniePiłkarzy(Ustawienie ustawienie){
+    private List<Piłkarz> stworzeniePiłkarzy(Ustawienie ustawienie) {
         Integer ilośćBramkarzy = ustawienie.getBramkarz();
         Integer ilośćObrońców = ustawienie.getLiczbaObrońców();
         Integer ilośćDefensywnychPomocników = ustawienie.getLiczbaDefensywnychPomocników();
@@ -108,9 +107,31 @@ public class DrużynaSerwis {
             for (int i = 0; i < ilośćNapastników + DODATKOWY_NAPASTNIK; i++) {
                 Piłkarz napastnik = piłkarzSerwis.stwórzPiłkarza(PozycjaPiłkarza.NAPASTNIK);
                 listaPiłkarzy.add(napastnik);
-
             }
         }
+
+        return filterNames(listaPiłkarzy);
+
+    }
+
+    private List<Piłkarz> filterNames (List<Piłkarz> listaPiłkarzy){
+        int licznik = 1;
+        for (Piłkarz piłkarz: listaPiłkarzy) {
+            licznik = checkNames(listaPiłkarzy, licznik, piłkarz);
+        }
         return listaPiłkarzy;
+    }
+
+    private int checkNames(List<Piłkarz> listaPiłkarzy, int licznik, Piłkarz piłkarz) {
+        for(Piłkarz piłkarz2: listaPiłkarzy){
+            if(piłkarz != piłkarz2 && piłkarz.getImieNazwisko().equals(piłkarz2.getImieNazwisko())){
+                licznik += 1;
+            }
+            if(licznik > 1){
+                piłkarz2.setImieNazwisko(apiGateway.createNames());
+                licznik -= 1;
+            }
+        }
+        return licznik;
     }
 }

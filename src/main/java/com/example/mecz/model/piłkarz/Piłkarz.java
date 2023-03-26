@@ -1,8 +1,13 @@
 package com.example.mecz.model.piłkarz;
 
 import com.google.common.collect.ImmutableList;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public abstract class Piłkarz {
+    private String imieNazwisko;
     private ImmutableList pozycjePiłkarza;
     private int obrona;
     private int atak;
@@ -12,7 +17,8 @@ public abstract class Piłkarz {
     private int technika;
 
 
-    public Piłkarz(ImmutableList pozycjePiłkarza, int obrona, int atak, int szybkość, int waleczność, int kondycja, int technika){
+    public Piłkarz(String imieNazwisko, ImmutableList pozycjePiłkarza, int obrona, int atak, int szybkość, int waleczność, int kondycja, int technika){
+        this.imieNazwisko = imieNazwisko;
         this.pozycjePiłkarza = pozycjePiłkarza;
         this.obrona = obrona;
         this.atak = atak;
