@@ -1,7 +1,7 @@
 package com.example.mecz.service;
 
+import com.example.mecz.exceptions.CoachException;
 import com.example.mecz.exceptions.GoalkeeperException;
-import com.example.mecz.exceptions.TrenerException;
 import com.example.mecz.exceptions.Line_upException;
 import com.example.mecz.model.Team;
 import com.example.mecz.model.Line_Up;
@@ -48,7 +48,7 @@ public class DrużynaSerwis {
             Coach coach = trenerSerwis.stwórzTrenera(coachType.valueOf(typTrenera));
             return coach;
         } catch (Exception exception) {
-            throw new TrenerException(typTrenera, exception.getMessage());
+            throw new CoachException(typTrenera, exception.getMessage());
         }
     }
 
