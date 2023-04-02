@@ -1,9 +1,9 @@
 package com.example.mecz.service;
 import com.example.mecz.CreateTeamServiceApplication;
-import com.example.mecz.model.Drużyna;
-import com.example.mecz.model.piłkarz.Piłkarz;
-import com.example.mecz.model.piłkarz.PozycjaPiłkarza;
-import com.example.mecz.model.trener.TypTrenera;
+import com.example.mecz.model.Team;
+import com.example.mecz.model.piłkarz.Footballer;
+import com.example.mecz.model.piłkarz.FootballerPosition;
+import com.example.mecz.model.trener.coachType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 //@RunWith(SpringRunner.class)
 
 
-class DrużynaSerwisTest {
+class TeamSerwisTest {
 
 
     @ParameterizedTest
@@ -30,18 +30,18 @@ class DrużynaSerwisTest {
     @MethodSource("prepareCasesForCreatingTeam")
     public void powinnoStworzyćDrużynę(String typTrenera, int nrUstawienia) {
         //given
-        TypTrenera typTreneraEnum = TypTrenera.valueOf(typTrenera);
+        coachType coachTypeEnum = coachType.valueOf(typTrenera);
         ApiGateway apiGateway = new ApiGateway();
         ImieNazwiskoSerwis imieNazwiskoSerwis = new ImieNazwiskoSerwis();
         PiłkarzSerwis piłkarzSerwis = new PiłkarzSerwis(imieNazwiskoSerwis,apiGateway);
         TrenerSerwis trenerSerwis = new TrenerSerwis(apiGateway);
         DrużynaSerwis drużynaSerwis = new DrużynaSerwis(piłkarzSerwis,trenerSerwis,apiGateway);
         //when
-        Drużyna drużyna = drużynaSerwis.stwórzDrużynę(typTrenera,nrUstawienia);
+        Team team = drużynaSerwis.stwórzDrużynę(typTrenera,nrUstawienia);
         //then
-        Assertions.assertEquals(drużyna.getUstawienie().getNrUstawienia(),nrUstawienia);
-        Assertions.assertTrue(drużyna.getPiłkarze().size() > 22);
-        Assertions.assertEquals(drużyna.getTrener().getTypTrenera(),typTreneraEnum);
+        Assertions.assertEquals(team.getLineUp().getNrUstawienia(),nrUstawienia);
+        Assertions.assertTrue(team.getFootballers().size() > 22);
+        Assertions.assertEquals(team.getCoach().getCoachType(), coachTypeEnum);
     }
 
     private static Stream<Arguments> prepareCasesForCreatingTeam(){
@@ -59,27 +59,27 @@ class DrużynaSerwisTest {
         ImieNazwiskoSerwis imieNazwiskoSerwis = new ImieNazwiskoSerwis();
         ApiGateway apiGateway = new ApiGateway();
         PiłkarzSerwis piłkarzSerwis = new PiłkarzSerwis(imieNazwiskoSerwis,apiGateway);
-        List<Piłkarz> piłkarzList = new ArrayList<>();
+        List<Footballer> footballerList = new ArrayList<>();
 
-        piłkarzList.add(piłkarzSerwis.stwórzPiłkarza(PozycjaPiłkarza.OBROŃCA));
-        piłkarzList.add(piłkarzSerwis.stwórzPiłkarza(PozycjaPiłkarza.OBROŃCA));
-        piłkarzList.add(piłkarzSerwis.stwórzPiłkarza(PozycjaPiłkarza.OBROŃCA));
-        checkNames(piłkarzList);
+        footballerList.add(piłkarzSerwis.stwórzPiłkarza(FootballerPosition.DEFENDER));
+        footballerList.add(piłkarzSerwis.stwórzPiłkarza(FootballerPosition.DEFENDER));
+        footballerList.add(piłkarzSerwis.stwórzPiłkarza(FootballerPosition.DEFENDER));
+        checkNames(footballerList);
 
 
-        String imieNazwisko = piłkarzList.get(1).getImieNazwisko();
-        piłkarzList.size();
+        String imieNazwisko = footballerList.get(1).getNameSurname();
+        footballerList.size();
     }
-    private List<Piłkarz> checkNames (List<Piłkarz> listaPiłkarzy){
+    private List<Footballer> checkNames (List<Footballer> listaPiłkarzy){
         ApiGateway apiGateway = new ApiGateway();
         int licznik = 1;
-        for (Piłkarz piłkarz1: listaPiłkarzy) {
-            for(Piłkarz piłkarz2: listaPiłkarzy){
-                if(piłkarz1 != piłkarz2 && piłkarz1.getImieNazwisko().equals(piłkarz2.getImieNazwisko())){
+        for (Footballer footballer1 : listaPiłkarzy) {
+            for(Footballer footballer2 : listaPiłkarzy){
+                if(footballer1 != footballer2 && footballer1.getNameSurname().equals(footballer2.getNameSurname())){
                     licznik += 1;
                 }
                 if(licznik > 1){
-                    piłkarz2.setImieNazwisko(apiGateway.createNames());
+                    footballer2.setNameSurname(apiGateway.createNames());
                     licznik -= 1;
                 }
             }

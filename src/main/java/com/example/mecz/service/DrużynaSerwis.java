@@ -1,14 +1,14 @@
 package com.example.mecz.service;
 
-import com.example.mecz.exceptions.BramkarzException;
+import com.example.mecz.exceptions.GoalkeeperException;
 import com.example.mecz.exceptions.TrenerException;
-import com.example.mecz.exceptions.UstawienieException;
-import com.example.mecz.model.Drużyna;
-import com.example.mecz.model.Ustawienie;
-import com.example.mecz.model.piłkarz.Piłkarz;
-import com.example.mecz.model.piłkarz.PozycjaPiłkarza;
-import com.example.mecz.model.trener.Trener;
-import com.example.mecz.model.trener.TypTrenera;
+import com.example.mecz.exceptions.Line_upException;
+import com.example.mecz.model.Team;
+import com.example.mecz.model.Line_Up;
+import com.example.mecz.model.piłkarz.Footballer;
+import com.example.mecz.model.piłkarz.FootballerPosition;
+import com.example.mecz.model.trener.Coach;
+import com.example.mecz.model.trener.coachType;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -36,76 +36,76 @@ public class DrużynaSerwis {
         this.apiGateway = apiGateway;
     }
 
-    public Drużyna stwórzDrużynę(String typTrenera, Integer nrUstawienia) {
-        Ustawienie ustawienie = mapToLineup(nrUstawienia);
-        List<Piłkarz> piłkarze = stworzeniePiłkarzy(ustawienie);
-        Trener trener = stwórzTrenera(typTrenera);
-        return new Drużyna(ustawienie, piłkarze, trener);
+    public Team stwórzDrużynę(String typTrenera, Integer nrUstawienia) {
+        Line_Up lineUp = mapToLineup(nrUstawienia);
+        List<Footballer> piłkarze = stworzeniePiłkarzy(lineUp);
+        Coach coach = stwórzTrenera(typTrenera);
+        return new Team(lineUp, piłkarze, coach);
     }
 
-    public Trener stwórzTrenera(String typTrenera) {
+    public Coach stwórzTrenera(String typTrenera) {
         try {
-            Trener trener = trenerSerwis.stwórzTrenera(TypTrenera.valueOf(typTrenera));
-            return trener;
+            Coach coach = trenerSerwis.stwórzTrenera(coachType.valueOf(typTrenera));
+            return coach;
         } catch (Exception exception) {
             throw new TrenerException(typTrenera, exception.getMessage());
         }
     }
 
-    public Ustawienie mapToLineup(Integer nrUstawienia) {
-        List<Ustawienie> lineups = new ArrayList<>(Arrays.asList(Ustawienie.values()));
-        Ustawienie ustawienie = lineups.stream()
+    public Line_Up mapToLineup(Integer nrUstawienia) {
+        List<Line_Up> lineups = new ArrayList<>(Arrays.asList(Line_Up.values()));
+        Line_Up lineUp = lineups.stream()
                 .filter(l -> l.getNrUstawienia().equals(nrUstawienia))
                 .findFirst()
-                .orElseThrow(() -> new UstawienieException(nrUstawienia));
-        return ustawienie;
+                .orElseThrow(() -> new Line_upException(nrUstawienia));
+        return lineUp;
     }
 
-    private List<Piłkarz> stworzeniePiłkarzy(Ustawienie ustawienie) {
-        Integer ilośćBramkarzy = ustawienie.getBramkarz();
-        Integer ilośćObrońców = ustawienie.getLiczbaObrońców();
-        Integer ilośćDefensywnychPomocników = ustawienie.getLiczbaDefensywnychPomocników();
-        Integer ilośćPomocników = ustawienie.getLiczbaPomocników();
-        Integer ilośćOfensywnychPomocników = ustawienie.getLiczbaOfensywnychPomocników();
-        Integer ilośćNapastników = ustawienie.getLiczbaNapastników();
+    private List<Footballer> stworzeniePiłkarzy(Line_Up lineUp) {
+        Integer ilośćBramkarzy = lineUp.getBramkarz();
+        Integer ilośćObrońców = lineUp.getLiczbaObrońców();
+        Integer ilośćDefensywnychPomocników = lineUp.getLiczbaDefensywnychPomocników();
+        Integer ilośćPomocników = lineUp.getLiczbaPomocników();
+        Integer ilośćOfensywnychPomocników = lineUp.getLiczbaOfensywnychPomocników();
+        Integer ilośćNapastników = lineUp.getLiczbaNapastników();
 
-        List<Piłkarz> listaPiłkarzy = new ArrayList<>();
+        List<Footballer> listaPiłkarzy = new ArrayList<>();
 
         if (ilośćBramkarzy > 0) {
             for (int i = 0; i < ilośćBramkarzy + DODATKOWY_BRAMKARZ; i++) {
-                Piłkarz bramkarz = piłkarzSerwis.stwórzPiłkarza(PozycjaPiłkarza.BRAMKARZ);
+                Footballer bramkarz = piłkarzSerwis.stwórzPiłkarza(FootballerPosition.GOALKEEPER);
                 listaPiłkarzy.add(bramkarz);
             }
         } else {
-            throw new BramkarzException();
+            throw new GoalkeeperException();
         }
         if (ilośćObrońców > 0) {
             for (int i = 0; i < ilośćObrońców + DODATKOWY_OBROŃCA; i++) {
-                Piłkarz obrońca = piłkarzSerwis.stwórzPiłkarza(PozycjaPiłkarza.OBROŃCA);
+                Footballer obrońca = piłkarzSerwis.stwórzPiłkarza(FootballerPosition.DEFENDER);
                 listaPiłkarzy.add(obrońca);
             }
         }
         if (ilośćDefensywnychPomocników > 0) {
             for (int i = 0; i < ilośćDefensywnychPomocników + DODATKOWY_DEFENSYWNY_POMOCNIK; i++) {
-                Piłkarz defensywnyPomocnik = piłkarzSerwis.stwórzPiłkarza(PozycjaPiłkarza.DEFENSYWNY_POMOCNIK);
+                Footballer defensywnyPomocnik = piłkarzSerwis.stwórzPiłkarza(FootballerPosition.DEFENSIVE_MIDFIELDER);
                 listaPiłkarzy.add(defensywnyPomocnik);
             }
         }
         if (ilośćPomocników > 0) {
             for (int i = 0; i < ilośćPomocników + DODATKOWY_POMOCNIK; i++) {
-                Piłkarz pomocnik = piłkarzSerwis.stwórzPiłkarza(PozycjaPiłkarza.POMOCNIK);
+                Footballer pomocnik = piłkarzSerwis.stwórzPiłkarza(FootballerPosition.FORWARD_MIDFIELDER);
                 listaPiłkarzy.add(pomocnik);
             }
         }
         if (ilośćOfensywnychPomocników > 0) {
             for (int i = 0; i < ilośćOfensywnychPomocników + DODATKOWY_OFENSYWNY_POMOCNIK; i++) {
-                Piłkarz ofensywnyPomocnik = piłkarzSerwis.stwórzPiłkarza(PozycjaPiłkarza.OFENSYWNY_POMOCNIK);
+                Footballer ofensywnyPomocnik = piłkarzSerwis.stwórzPiłkarza(FootballerPosition.OFFENSIVE_MIDFIELDER);
                 listaPiłkarzy.add(ofensywnyPomocnik);
             }
         }
         if (ilośćNapastników > 0) {
             for (int i = 0; i < ilośćNapastników + DODATKOWY_NAPASTNIK; i++) {
-                Piłkarz napastnik = piłkarzSerwis.stwórzPiłkarza(PozycjaPiłkarza.NAPASTNIK);
+                Footballer napastnik = piłkarzSerwis.stwórzPiłkarza(FootballerPosition.STRIKER);
                 listaPiłkarzy.add(napastnik);
             }
         }
@@ -114,21 +114,21 @@ public class DrużynaSerwis {
 
     }
 
-    private List<Piłkarz> filterNames (List<Piłkarz> listaPiłkarzy){
+    private List<Footballer> filterNames (List<Footballer> listaPiłkarzy){
         int licznik = 1;
-        for (Piłkarz piłkarz: listaPiłkarzy) {
-            licznik = checkNames(listaPiłkarzy, licznik, piłkarz);
+        for (Footballer footballer : listaPiłkarzy) {
+            licznik = checkNames(listaPiłkarzy, licznik, footballer);
         }
         return listaPiłkarzy;
     }
 
-    private int checkNames(List<Piłkarz> listaPiłkarzy, int licznik, Piłkarz piłkarz) {
-        for(Piłkarz piłkarz2: listaPiłkarzy){
-            if(piłkarz != piłkarz2 && piłkarz.getImieNazwisko().equals(piłkarz2.getImieNazwisko())){
+    private int checkNames(List<Footballer> listaPiłkarzy, int licznik, Footballer footballer) {
+        for(Footballer footballer2 : listaPiłkarzy){
+            if(footballer != footballer2 && footballer.getNameSurname().equals(footballer2.getNameSurname())){
                 licznik += 1;
             }
             if(licznik > 1){
-                piłkarz2.setImieNazwisko(apiGateway.createNames());
+                footballer2.setNameSurname(apiGateway.createNames());
                 licznik -= 1;
             }
         }

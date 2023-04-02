@@ -1,7 +1,7 @@
 package com.example.mecz.service;
 
 
-import com.example.mecz.exceptions.TrenerException;
+import com.example.mecz.exceptions.CoachException;
 import com.example.mecz.model.trener.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,43 +17,43 @@ public class TrenerSerwis {
     }
 
 
-    public Trener stwórzTrenera(TypTrenera typTrenera) {
-        Trener trener;
+    public Coach stwórzTrenera(coachType coachType) {
+        Coach coach;
 
         try {
-            switch (typTrenera) {
+            switch (coachType) {
                 case OFFENSIVE:
-                    trener = new TrenerOfensywny();
+                    coach = new CoachOfensywny();
                     break;
                 case BALANCED:
-                    trener = new TrenerZrównoważony();
+                    coach = new CoachZrównoważony();
                     break;
                 case DEFENSIVE:
-                    trener = new TrenerDefensywny();
+                    coach = new CoachDefensywny();
                     break;
                 default:
-                    throw new IllegalStateException("Unexpected value: " + typTrenera);
+                    throw new IllegalStateException("Unexpected value: " + coachType);
             }
 
-            createName(trener);
+            createName(coach);
         } catch (Exception e) {
             //logowanie błędów + nie zjadanie ich
             log.error(String.format("Nie udało się stworzyć trenera, z powodu: %s", e.getMessage()), e);
-            throw new TrenerException(typTrenera.name(), e.getMessage());
+            throw new CoachException(coachType.name(), e.getMessage());
         }
 
-        return trener;
+        return coach;
     }
 
 
 
-    private Trener createName(Trener trener) {
+    private Coach createName(Coach coach) {
         try {
             String name = apiGateway.createNames();
-            trener.setImieNazwisko(name);
+            coach.setNameSurname(name);
         } catch (Exception exception) {
-            trener.setImieNazwisko("Paulo Sousa");
+            coach.setNameSurname("Paulo Sousa");
         }
-        return trener;
+        return coach;
     }
 }

@@ -2,7 +2,7 @@ package com.example.mecz.service;
 
 
 import com.example.mecz.Utils.Utils;
-import com.example.mecz.exceptions.PiłkarzException;
+import com.example.mecz.exceptions.FootballerException;
 import com.example.mecz.model.piłkarz.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,42 +20,42 @@ public class PiłkarzSerwis {
         this.apiGateway = apiGateway;
     }
 
-    public Piłkarz stwórzPiłkarza(PozycjaPiłkarza pozycjaPiłkarza) {
-        Piłkarz piłkarz;
+    public Footballer stwórzPiłkarza(FootballerPosition footballerPosition) {
+        Footballer footballer;
 
         try {
-            switch (pozycjaPiłkarza) {
-                case BRAMKARZ:
-                    piłkarz = new PiłkarzBramkarz();
+            switch (footballerPosition) {
+                case GOALKEEPER:
+                    footballer = new FootballerGoalkeeper();
                     break;
-                case OBROŃCA:
-                    piłkarz = new PiłkarzObrońca();
+                case DEFENDER:
+                    footballer = new FootballerDefender();
                     break;
-                case DEFENSYWNY_POMOCNIK:
-                    piłkarz = new PiłkarzDefensywnyPomocnik();
+                case DEFENSIVE_MIDFIELDER:
+                    footballer = new FootballerDefensiveMidfielder();
                     break;
-                case POMOCNIK:
-                    piłkarz = new PiłkarzPomocnik();
+                case FORWARD_MIDFIELDER:
+                    footballer = new FootballerForwardMidfielder();
                     break;
-                case OFENSYWNY_POMOCNIK:
-                    piłkarz = new PiłkarzOfensywnyPomocnik();
+                case OFFENSIVE_MIDFIELDER:
+                    footballer = new FootballerOffensiveMidfielder();
                     break;
-                case NAPASTNIK:
-                    piłkarz = new PiłkarzNapastnik();
+                case STRIKER:
+                    footballer = new FootballerStriker();
                     break;
                 default:
-                    throw new IllegalStateException("Unexpected value: " + pozycjaPiłkarza);
+                    throw new IllegalStateException("Unexpected value: " + footballerPosition);
             }
             //String nameAndSurname = imieNazwiskoSerwis.createNameAndSurname();
-            piłkarz.setImieNazwisko(losowanieName());
+            footballer.setNameSurname(losowanieName());
 
         }catch (Exception e){
             log.error(String.format("Nie udało się stworzyć piłkarza, z powodu: %s", e.getMessage()), e);
-            throw new PiłkarzException(pozycjaPiłkarza.name(), e.getMessage());
+            throw new FootballerException(footballerPosition.name(), e.getMessage());
         }
 
 
-        return piłkarz;
+        return footballer;
 
 
     }

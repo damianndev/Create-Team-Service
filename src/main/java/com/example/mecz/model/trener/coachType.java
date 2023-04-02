@@ -1,6 +1,6 @@
 package com.example.mecz.model.trener;
 
-public enum TypTrenera {
+public enum coachType {
     OFFENSIVE,
     DEFENSIVE,
     BALANCED,

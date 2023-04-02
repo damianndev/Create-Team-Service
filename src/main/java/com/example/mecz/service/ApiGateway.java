@@ -24,3 +24,5 @@ public class ApiGateway {
 
     }
 }
+
+//TODO: dodatkowy replace bo przychodzą z apigateway nazwy z "/"
