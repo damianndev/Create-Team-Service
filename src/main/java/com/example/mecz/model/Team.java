@@ -1,7 +1,7 @@
 package com.example.mecz.model;
 
-import com.example.mecz.model.piłkarz.Footballer;
-import com.example.mecz.model.trener.Coach;
+import com.example.mecz.model.footballer.Footballer;
+import com.example.mecz.model.coach.Coach;
 import lombok.Getter;
 import lombok.Setter;
 

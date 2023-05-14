@@ -1,10 +1,10 @@
-package com.example.mecz.model.piłkarz;
+package com.example.mecz.model.footballer;
 
 public enum FootballerPosition {
     GOALKEEPER,
     DEFENDER,
     DEFENSIVE_MIDFIELDER,
-    FORWARD_MIDFIELDER,
+    MIDFIELDER,
     OFFENSIVE_MIDFIELDER,
     STRIKER
 }

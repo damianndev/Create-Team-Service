@@ -1,9 +1,9 @@
 package com.example.mecz.service;
 import com.example.mecz.CreateTeamServiceApplication;
 import com.example.mecz.model.Team;
-import com.example.mecz.model.piłkarz.Footballer;
-import com.example.mecz.model.piłkarz.FootballerPosition;
-import com.example.mecz.model.trener.coachType;
+import com.example.mecz.model.footballer.Footballer;
+import com.example.mecz.model.footballer.FootballerPosition;
+import com.example.mecz.model.coach.CoachType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

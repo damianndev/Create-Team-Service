@@ -3,7 +3,7 @@ package com.example.mecz.service;
 
 import com.example.mecz.Utils.Utils;
 import com.example.mecz.exceptions.FootballerException;
-import com.example.mecz.model.piłkarz.*;
+import com.example.mecz.model.footballer.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

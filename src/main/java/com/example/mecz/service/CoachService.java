@@ -2,7 +2,7 @@ package com.example.mecz.service;
 
 
 import com.example.mecz.exceptions.CoachException;
-import com.example.mecz.model.trener.*;
+import com.example.mecz.model.coach.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

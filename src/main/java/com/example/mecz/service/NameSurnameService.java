@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @Service
-public class ImieNazwiskoSerwis {
+public class NameSurnameService {
 
     public String createNameAndSurname(){
         List<String> listOfNames = prepareListOfNames();

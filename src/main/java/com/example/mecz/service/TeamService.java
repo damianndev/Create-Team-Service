@@ -5,10 +5,10 @@ import com.example.mecz.exceptions.GoalkeeperException;
 import com.example.mecz.exceptions.Line_upException;
 import com.example.mecz.model.Team;
 import com.example.mecz.model.Line_Up;
-import com.example.mecz.model.piłkarz.Footballer;
-import com.example.mecz.model.piłkarz.FootballerPosition;
-import com.example.mecz.model.trener.Coach;
-import com.example.mecz.model.trener.coachType;
+import com.example.mecz.model.footballer.Footballer;
+import com.example.mecz.model.footballer.FootballerPosition;
+import com.example.mecz.model.coach.Coach;
+import com.example.mecz.model.coach.CoachType;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

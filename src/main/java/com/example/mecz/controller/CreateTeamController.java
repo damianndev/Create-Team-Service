@@ -1,5 +1,7 @@
 package com.example.mecz.controller;
 
+import com.example.mecz.controller.dto.CoachDto;
+import com.example.mecz.controller.dto.LineUpDto;
 import com.example.mecz.exceptions.Line_upException;
 import com.example.mecz.model.Team;
 import com.example.mecz.model.Line_Up;
@@ -42,16 +44,22 @@ public class CreateTeamController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/coaches", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<String> getCoaches(){
-       return Arrays.asList(coachType.values()).stream()
-               .map(typTrenera -> typTrenera.name()) //.map(Enum::name)
+    public List<CoachDto> getCoaches(){
+       return Arrays.asList(CoachType.values()).stream()
+               .map(coachType -> CoachDto.builder()
+                       .coachType(coachType.name())
+                       .build())
                .collect(Collectors.toList());
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/lineups", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Integer> getLineups(){
+    public List<LineUpDto> getLineups(){
         return Arrays.asList(Line_Up.values()).stream()
-                .map(lineUp -> lineUp.getNrUstawienia()) //.map(Ustawienie::getNrUstawienia)
+                //.map(ustawienie -> new LineUpDto(ustawienie.getNrUstawienia(), ustawienie.name())) //.map(Ustawienie::getNrUstawienia)
+                .map(lineup -> LineUpDto.builder()
+                        .lineupNumber(lineup.getLineupNumber())
+                        .lineupName(lineup.name())
+                        .build())
                 .collect(Collectors.toList());
     }
 

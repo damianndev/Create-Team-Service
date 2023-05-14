@@ -1,4 +1,4 @@
-package com.example.mecz.model.piłkarz;
+package com.example.mecz.model.footballer;
 
 import com.google.common.collect.ImmutableList;
 import lombok.Getter;
@@ -17,10 +17,10 @@ public abstract class Footballer {
     private int technique;
 
 
-    public Footballer(String nameSurname, ImmutableList footballerPositions, int obrona, int attack, int speed, int aggressive, int physical_condition, int technique){
+    public Footballer(String nameSurname, ImmutableList footballerPositions, int defence, int attack, int speed, int aggressive, int physical_condition, int technique){
         this.nameSurname = nameSurname;
         this.footballerPositions = footballerPositions;
-        this.defence = obrona;
+        this.defence = defence;
         this.attack = attack;
         this.speed = speed;
         this.aggressive = aggressive;
