@@ -1,6 +1,5 @@
 package com.example.mecz.service;
 
-
 import com.example.mecz.exceptions.CoachException;
 import com.example.mecz.model.coach.*;
 import lombok.extern.slf4j.Slf4j;
@@ -8,28 +7,27 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class TrenerSerwis {
+public class CoachService {
 
     private ApiGateway apiGateway;
 
-    public TrenerSerwis(ApiGateway apiGateway) {
+    public CoachService(ApiGateway apiGateway) {
         this.apiGateway = apiGateway;
     }
 
-
-    public Coach stwórzTrenera(coachType coachType) {
+    public Coach createCoach(CoachType coachType) {
         Coach coach;
 
         try {
             switch (coachType) {
                 case OFFENSIVE:
-                    coach = new CoachOfensywny();
+                    coach = new OffensiveCoach();
                     break;
                 case BALANCED:
-                    coach = new CoachZrównoważony();
+                    coach = new BalancedCoach();
                     break;
                 case DEFENSIVE:
-                    coach = new CoachDefensywny();
+                    coach = new DefensiveCoach();
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + coachType);
@@ -44,8 +42,6 @@ public class TrenerSerwis {
 
         return coach;
     }
-
-
 
     private Coach createName(Coach coach) {
         try {

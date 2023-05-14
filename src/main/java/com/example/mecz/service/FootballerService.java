@@ -1,6 +1,5 @@
 package com.example.mecz.service;
 
-
 import com.example.mecz.Utils.Utils;
 import com.example.mecz.exceptions.FootballerException;
 import com.example.mecz.model.footballer.*;
@@ -9,18 +8,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class PiłkarzSerwis {
+public class FootballerService {
 
-    private ImieNazwiskoSerwis imieNazwiskoSerwis;
+    private NameSurnameService nameSurnameService;
     private ApiGateway apiGateway;
 
-
-    public PiłkarzSerwis(ImieNazwiskoSerwis imieNazwiskoSerwis, ApiGateway apiGateway){
-        this.imieNazwiskoSerwis = imieNazwiskoSerwis;
+    public FootballerService(NameSurnameService nameSurnameService, ApiGateway apiGateway){
+        this.nameSurnameService = nameSurnameService;
         this.apiGateway = apiGateway;
     }
 
-    public Footballer stwórzPiłkarza(FootballerPosition footballerPosition) {
+    public Footballer createFootballer(FootballerPosition footballerPosition) {
         Footballer footballer;
 
         try {
@@ -34,8 +32,8 @@ public class PiłkarzSerwis {
                 case DEFENSIVE_MIDFIELDER:
                     footballer = new FootballerDefensiveMidfielder();
                     break;
-                case FORWARD_MIDFIELDER:
-                    footballer = new FootballerForwardMidfielder();
+                case MIDFIELDER:
+                    footballer = new FootballerMidfielder();
                     break;
                 case OFFENSIVE_MIDFIELDER:
                     footballer = new FootballerOffensiveMidfielder();
@@ -46,26 +44,20 @@ public class PiłkarzSerwis {
                 default:
                     throw new IllegalStateException("Unexpected value: " + footballerPosition);
             }
-            //String nameAndSurname = imieNazwiskoSerwis.createNameAndSurname();
-            footballer.setNameSurname(losowanieName());
+            footballer.setNameSurname(nameDraw());
 
         }catch (Exception e){
             log.error(String.format("Nie udało się stworzyć piłkarza, z powodu: %s", e.getMessage()), e);
             throw new FootballerException(footballerPosition.name(), e.getMessage());
         }
-
-
         return footballer;
-
-
     }
 
-
-    private String losowanieName (){
-        int indexName = Utils.losuj(1,5);
+    private String nameDraw(){
+        int indexName = Utils.draw(1,5);
         String nameAndSurname;
         if(indexName < 4){
-        nameAndSurname = imieNazwiskoSerwis.createNameAndSurname();
+        nameAndSurname = nameSurnameService.createNameAndSurname();
         } else {
             nameAndSurname = apiGateway.createNames();
         }

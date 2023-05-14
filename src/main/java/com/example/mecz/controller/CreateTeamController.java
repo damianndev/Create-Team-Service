@@ -5,8 +5,8 @@ import com.example.mecz.controller.dto.LineUpDto;
 import com.example.mecz.exceptions.Line_upException;
 import com.example.mecz.model.Team;
 import com.example.mecz.model.Line_Up;
-import com.example.mecz.model.trener.coachType;
-import com.example.mecz.service.DrużynaSerwis;
+import com.example.mecz.model.coach.CoachType;
+import com.example.mecz.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -19,25 +19,24 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CreateTeamController {
 
-    private final DrużynaSerwis drużynaSerwis;
+    private final TeamService teamService;
 
     @RequestMapping(method = RequestMethod.POST, path = "/create-team", produces = MediaType.APPLICATION_JSON_VALUE)
     public Team createTeam(@RequestBody TeamRequest teamRequest) {
-        Team team = drużynaSerwis.stwórzDrużynę(teamRequest.getTypTrenera(), teamRequest.getNrUstawienia());
+        Team team = teamService.createTeam(teamRequest.getCoachType(), teamRequest.getLineupNumber());
         return team;
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/create-team-params", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Team createTeamParams(@RequestParam("typTrenera") String typTrenera, @RequestParam("nrUstawienia") Integer nrUstawienia){
-        Team team = drużynaSerwis.stwórzDrużynę(typTrenera, nrUstawienia);
-
+    public Team createTeamParams(@RequestParam("coachType") String coachType, @RequestParam("lineupNumber") Integer lineupNumber){
+        Team team = teamService.createTeam(coachType, lineupNumber);
         return team;
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/lineup/{number}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Line_Up giveMeLineUp(@PathVariable(value = "number") int number) {
         try {
-            return drużynaSerwis.mapToLineup(number);
+            return teamService.mapToLineup(number);
         } catch (Exception e) {
             throw new Line_upException(number);
         }
@@ -63,7 +62,6 @@ public class CreateTeamController {
                 .collect(Collectors.toList());
     }
 
-//TODO: w ramach ćwiczeń porobić kontrolery
 }
 
 

@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 @Service
 public class NameSurnameService {
 
@@ -17,17 +15,13 @@ public class NameSurnameService {
         return fullName;
     }
 
-    private String prepareName(List<String> listaImion) {
-        //zrobić losowanie
-       return listaImion.get(Utils.losuj(0,listaImion.size()-1));
+    private String prepareName(List<String> listOfNames) {
+       return listOfNames.get(Utils.draw(0,listOfNames.size()-1));
     }
 
-
-    private   String prepareSurname(List<String> listaNazwisk) {
-        return listaNazwisk.get(Utils.losuj(0,listaNazwisk.size()-1));
+    private   String prepareSurname(List<String> listOfSurnames) {
+        return listOfSurnames.get(Utils.draw(0,listOfSurnames.size()-1));
     }
-
-
 
     private List<String> prepareListOfNames() {
 
@@ -62,7 +56,6 @@ public class NameSurnameService {
 
         List<String> listOfSurnames = new ArrayList<>();
 
-
         listOfSurnames.add("Smith ");
         listOfSurnames.add("Jones");
         listOfSurnames.add("Williams");
@@ -86,10 +79,6 @@ public class NameSurnameService {
         listOfSurnames.add("Clarke");
 
         return listOfSurnames;
+
     }
-
-
-
-
-
 }

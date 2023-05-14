@@ -10,7 +10,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TeamRequest {
-    private String typTrenera;
-    private Integer nrUstawienia;
+
+    private String coachType;
+    private Integer lineupNumber;
 
 }

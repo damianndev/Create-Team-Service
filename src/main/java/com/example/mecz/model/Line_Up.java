@@ -3,8 +3,6 @@ package com.example.mecz.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-
-
 @Getter
 @AllArgsConstructor
 public enum Line_Up {
@@ -19,13 +17,13 @@ public enum Line_Up {
     DIAMENT(9,1,4,1,2,1,2);
 
 
-    private Integer nrUstawienia;
-    private Integer bramkarz;
-    private Integer liczbaObrońców;
-    private Integer liczbaDefensywnychPomocników;
-    private Integer liczbaPomocników;
-    private Integer liczbaOfensywnychPomocników;
-    private Integer liczbaNapastników;
+    private Integer lineupNumber;
+    private Integer goalkeeper;
+    private Integer numberOfDefenders;
+    private Integer numberOfDefensiveMidfielders;
+    private Integer numberOfMidfielders;
+    private Integer numberOfOffensiveMidfielders;
+    private Integer numberOfStrikers;
 
 
 
