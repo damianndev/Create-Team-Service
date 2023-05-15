@@ -10,7 +10,6 @@ import com.example.mecz.model.footballer.FootballerPosition;
 import com.example.mecz.model.coach.Coach;
 import com.example.mecz.model.coach.CoachType;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

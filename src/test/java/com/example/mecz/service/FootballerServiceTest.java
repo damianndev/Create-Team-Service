@@ -5,6 +5,7 @@ import com.example.mecz.model.footballer.FootballerPosition;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
+
 class FootballerServiceTest {
 
     @Test

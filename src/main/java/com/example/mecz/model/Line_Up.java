@@ -3,9 +3,11 @@ package com.example.mecz.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+
 @Getter
 @AllArgsConstructor
 public enum Line_Up {
+
     JEDEN_CZTERY_CZTERY_DWA(1,1,4,0,4,0,2),
     JEDEN_TRZY_CZTERY_TRZY(2,1,3,0,4,0,3),
     JEDEN_CZTERY_PIĘĆ_JEDEN(3,1,4,0,5,0,1),

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class CoachServiceTest {
 
+
     @Test
     public void shouldCreateCoach() {
         //given

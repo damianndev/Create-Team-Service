@@ -1,5 +1,6 @@
 package com.example.mecz.model.footballer;
 
+
 public enum FootballerPosition {
     GOALKEEPER,
     DEFENDER,

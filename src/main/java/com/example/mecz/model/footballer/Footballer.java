@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 public abstract class Footballer {

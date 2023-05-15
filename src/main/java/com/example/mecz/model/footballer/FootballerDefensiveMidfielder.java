@@ -1,6 +1,6 @@
 package com.example.mecz.model.footballer;
-import com.google.common.collect.ImmutableList;
 
+import com.google.common.collect.ImmutableList;
 import com.example.mecz.Utils.Utils;
 
 public class FootballerDefensiveMidfielder extends Footballer {
